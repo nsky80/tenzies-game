@@ -1,12 +1,16 @@
 import './App.css';
 import Die from './components/Die';
+import react from 'react';
 /**
  * Challenge:
  * 
- * Write a function (allNewDice) that returns an array 
- * of 10 random numbers between 1-6 inclusive.
+ * Create state to hold our array of numbers. (Initialize
+ * the state by calling our `allNewDice` function so it 
+ * loads all new dice as soon as the app loads)
  * 
- * Log the array of numbers to the console for now
+ * Map over the state numbers array to generate our array
+ * of Die elements and render those in place of our
+ * manually-written 10 Die elements.
  */
 function App() {
 
@@ -19,13 +23,15 @@ function App() {
 		return randomDice
 	}
 
-	const dice = allNewDice().map(num => <Die value={num}/>)
+	const [dice, setDice] = react.useState(allNewDice)
+
+	const diceElements = dice.map(num => <Die value={num}/>)
 
 	return (
 		<main>
 
 			<div className="dice-container">
-				{dice}
+				{diceElements}
 			</div>
 
 		</main>
