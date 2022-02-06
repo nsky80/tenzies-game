@@ -2,21 +2,18 @@ import './App.css';
 import Die from './components/Die';
 import react from 'react';
 /**
- * Challenge:
+ * Challenge: Create a `Roll Dice` button that will re-roll
+ * all 10 dice
  * 
- * Create state to hold our array of numbers. (Initialize
- * the state by calling our `allNewDice` function so it 
- * loads all new dice as soon as the app loads)
- * 
- * Map over the state numbers array to generate our array
- * of Die elements and render those in place of our
- * manually-written 10 Die elements.
+ * Clicking the button should generate a new array of numbers
+ * and set the `dice` state to that new array (thus re-rendering
+ * the array to the page)
  */
 function App() {
 
-	function allNewDice(){
+	function allNewDice() {
 		const randomDice = []
-		for(var i = 0; i < 10; i++){
+		for (var i = 0; i < 10; i++) {
 			randomDice.push(Math.floor((Math.random() * 6) + 1)
 			)
 		}
@@ -25,7 +22,11 @@ function App() {
 
 	const [dice, setDice] = react.useState(allNewDice)
 
-	const diceElements = dice.map(num => <Die value={num}/>)
+	const diceElements = dice.map(num => <Die value={num} />)
+
+	function rollDice(){
+		setDice(allNewDice)
+	}
 
 	return (
 		<main>
@@ -33,6 +34,10 @@ function App() {
 			<div className="dice-container">
 				{diceElements}
 			</div>
+			<button 
+			className='roll-button'
+			onClick={rollDice}
+			>Roll</button>
 
 		</main>
 	);
