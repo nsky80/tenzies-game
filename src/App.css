@@ -72,3 +72,6 @@ main {
 	transform: translateY(4px);
 }
 
+.dice-held{
+	background-color: #59E391;
+}
