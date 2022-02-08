@@ -13,6 +13,10 @@ import Confetti from 'react-confetti'
  *    Hint: don't worry about the `height` and `width` props
  *    it mentions in the documentation.
  */
+/**
+ * Challenge: Allow the user to play a new game when the
+ * button is clicked and they've already won
+ */
 
 function App() {
 	const [dice, setDice] = react.useState(allNewDice)
@@ -54,12 +58,16 @@ function App() {
 	 * This function will change the values of all dice having isHeld property false
 	 */
 	function rollDice() {
-		// setTenzies(false)
-		setDice(oldDice => oldDice.map(
-			x => (
-				x.isHeld ? { ...x } : { ...x, value: Math.floor((Math.random() * 6) + 1) }
-			)
-		))
+		if (tenzies) {
+			setDice(allNewDice())
+			setTenzies(false)
+		} else {
+			setDice(oldDice => oldDice.map(
+				x => (
+					x.isHeld ? { ...x } : { ...x, value: Math.floor((Math.random() * 6) + 1) }
+				)
+			))
+		}
 	}
 
 	/**
@@ -88,7 +96,7 @@ function App() {
 			<button
 				className='roll-button'
 				onClick={rollDice}
-			>{tenzies?"New Game" : "Roll"}</button>
+			>{tenzies ? "New Game" : "Roll"}</button>
 
 		</main>
 	);
