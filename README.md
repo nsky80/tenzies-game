@@ -71,3 +71,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ### Packages needs to install
 `npm i nanoid`
+`npm install react-confetti`

@@ -63,8 +63,8 @@ main {
 	border: none;
 	color: white;
 	height: 50px;
-	width: 100px;
-	/* padding: 15px 32px; */
+	min-width: 100px;
+	padding: 0px 32px 0px 32px;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;

@@ -2,24 +2,17 @@ import './App.css';
 import Die from './components/Die';
 import react from 'react';
 import { nanoid } from "nanoid"
+import Confetti from 'react-confetti'
 
 /**
- * Challenge:
- * 1. Add new state called `tenzies`, default to false. It
- *    represents whether the user has won the game yet or not.
- * 2. Add an effect that runs every time the `dice` state array 
- *    changes. For now, just console.log("Dice state changed").
- */
-
-/**
- * Challenge: Check the dice array for these winning conditions:
- * 1. All dice are held, and
- * 2. all dice have the same value
+ * Challenge: Tie off loose ends!
+ * 1. If tenzies is true, Change the button text to "New Game"
+ * 2. If tenzies is true, use the "react-confetti" package to
+ *    render the <Confetti /> component 🎉
  * 
- * If both conditions are true, set `tenzies` to true and log
- * "You won!" to the console
+ *    Hint: don't worry about the `height` and `width` props
+ *    it mentions in the documentation.
  */
-
 
 function App() {
 	const [dice, setDice] = react.useState(allNewDice)
@@ -61,6 +54,7 @@ function App() {
 	 * This function will change the values of all dice having isHeld property false
 	 */
 	function rollDice() {
+		// setTenzies(false)
 		setDice(oldDice => oldDice.map(
 			x => (
 				x.isHeld ? { ...x } : { ...x, value: Math.floor((Math.random() * 6) + 1) }
@@ -83,7 +77,7 @@ function App() {
 
 	return (
 		<main>
-
+			{tenzies && <Confetti />}
 			<h1 className="title">Tenzies</h1>
 			<p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
 
@@ -94,7 +88,7 @@ function App() {
 			<button
 				className='roll-button'
 				onClick={rollDice}
-			>Roll</button>
+			>{tenzies?"New Game" : "Roll"}</button>
 
 		</main>
 	);
