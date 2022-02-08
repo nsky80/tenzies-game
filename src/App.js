@@ -4,16 +4,39 @@ import react from 'react';
 import { nanoid } from "nanoid"
 
 /**
- * Challenge: Update the `rollDice` function to not just roll
- * all new dice, but instead to look through the existing dice
- * to NOT role any that are being `held`.
- * 
- * Hint: this will look relatively similiar to the `holdDice`
- * function below. When creating new dice, remember to use
- * `id: nanoid()` so any new dice have an `id` as well.
+ * Challenge:
+ * 1. Add new state called `tenzies`, default to false. It
+ *    represents whether the user has won the game yet or not.
+ * 2. Add an effect that runs every time the `dice` state array 
+ *    changes. For now, just console.log("Dice state changed").
  */
 
+/**
+ * Challenge: Check the dice array for these winning conditions:
+ * 1. All dice are held, and
+ * 2. all dice have the same value
+ * 
+ * If both conditions are true, set `tenzies` to true and log
+ * "You won!" to the console
+ */
+
+
 function App() {
+	const [dice, setDice] = react.useState(allNewDice)
+	const [tenzies, setTenzies] = react.useState(false)
+
+	// This will get called whenever the state of dice changes
+	react.useEffect(() => {
+		// console.log("Effect Called")
+		const sameValue = dice[0].value
+		//  All dice are held, and all dice have the same value
+		if (dice.every(die => die.isHeld && die.value === sameValue)) {
+			setTenzies(true)
+			console.log("You won!")
+		}
+	}, dice)
+
+
 	/**
 	 * This method generates an array of size 10 having 10 dice object which consist of value which is randomly
 	 * generated and isHeld which is boolean and id to uniquely identify each die.
@@ -33,7 +56,6 @@ function App() {
 		return randomDice
 	}
 
-	const [dice, setDice] = react.useState(allNewDice)
 
 	/**
 	 * This function will change the values of all dice having isHeld property false
