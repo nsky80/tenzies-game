@@ -4,23 +4,10 @@ import react from 'react';
 import { nanoid } from "nanoid"
 import Confetti from 'react-confetti'
 
-/**
- * Challenge: Tie off loose ends!
- * 1. If tenzies is true, Change the button text to "New Game"
- * 2. If tenzies is true, use the "react-confetti" package to
- *    render the <Confetti /> component 🎉
- * 
- *    Hint: don't worry about the `height` and `width` props
- *    it mentions in the documentation.
- */
-/**
- * Challenge: Allow the user to play a new game when the
- * button is clicked and they've already won
- */
-
 function App() {
 	const [dice, setDice] = react.useState(allNewDice)
 	const [tenzies, setTenzies] = react.useState(false)
+	const [numOfTimesDiceRolled, setNumOfTimesDiceRolled] = react.useState(0);
 
 	// This will get called whenever the state of dice changes
 	react.useEffect(() => {
@@ -29,7 +16,7 @@ function App() {
 		//  All dice are held, and all dice have the same value
 		if (dice.every(die => die.isHeld && die.value === sameValue)) {
 			setTenzies(true)
-			console.log("You won!")
+			console.log("You won! by using " + numOfTimesDiceRolled + " rolls")
 		}
 	}, dice)
 
@@ -59,14 +46,19 @@ function App() {
 	 */
 	function rollDice() {
 		if (tenzies) {
+			// resetting all parameters to start the game again
 			setDice(allNewDice())
 			setTenzies(false)
+			setNumOfTimesDiceRolled(0);
 		} else {
+			// roll only those dice which are not held
 			setDice(oldDice => oldDice.map(
 				x => (
 					x.isHeld ? { ...x } : { ...x, value: Math.floor((Math.random() * 6) + 1) }
 				)
 			))
+			// increment the couter
+			setNumOfTimesDiceRolled(oldCount => oldCount + 1)
 		}
 	}
 
@@ -75,7 +67,8 @@ function App() {
 	 * @param {} id 
 	 */
 	function holdDice(id) {
-		console.log(id)
+		// console.log(id)
+		// if user held the dice then it changes the state
 		setDice(oldDice => oldDice.map(x => (
 			x.id === id ? { ...x, isHeld: !x.isHeld } : { ...x }
 		)))
@@ -97,7 +90,7 @@ function App() {
 				className='roll-button'
 				onClick={rollDice}
 			>{tenzies ? "New Game" : "Roll"}</button>
-
+			<h3>{tenzies && `You won! you have taken ${numOfTimesDiceRolled} rolls!`}</h3>
 		</main>
 	);
 }
